@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INMOPY · Propiedades en venta y alquiler</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta name="description" content="Vista previa de página web para inmobiliaria: propiedades con fotos, precios y contacto directo por WhatsApp.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#274156;--navy2:#17456e;--gold:#d9a441;--green:#1faa55;--ink:#2b2f33;--mut:#7a8288;--bg:#f4f4f2;--line:#e6e6e2;--card:#fff}
+body{font-family:'Inter',-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+.ribbon{background:var(--navy);color:#e7d6a8;text-align:center;font-size:11px;font-weight:600;padding:7px 10px;letter-spacing:.14em;text-transform:uppercase}
+header{background:#fff;color:var(--navy);position:sticky;top:0;z-index:50;box-shadow:0 1px 0 var(--line),0 6px 18px rgba(15,44,73,.05)}
+.hwrap{max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;gap:12px}
+.logo{font-size:27px;font-weight:800;letter-spacing:.02em;color:var(--navy)}
+.logo span{color:var(--gold)}
+.logo small{display:block;font-size:9.5px;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--mut)}
+.hcta{display:flex;gap:14px;align-items:center}
+.logoimg{height:50px;width:auto}
+.hbtn{padding:9px 6px;font-size:15px;font-weight:700;color:var(--navy)}
+.hbtn.wa{background:var(--green);color:#fff;padding:10px 18px;border-radius:999px;font-size:13.5px;font-weight:700}
+.hero{position:relative;background:#0a1a2c}
+.hero img{width:100%;height:76vh;min-height:460px;object-fit:cover}
+.hero .over{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,26,44,.34),rgba(10,26,44,.10) 40%,rgba(10,26,44,.45));display:flex;flex-direction:column;justify-content:center}
+.hero .inner{max-width:900px;margin:0 auto;width:100%;padding:24px 20px;color:#fff;text-align:center}
+.hero h1{font-size:clamp(27px,4.6vw,42px);line-height:1.15;font-weight:300;letter-spacing:.01em;text-shadow:0 2px 16px rgba(0,0,0,.4)}
+.hero h1 b{font-weight:700}
+.hero p{margin-top:10px;color:#eef2f5;font-size:clamp(14px,2.2vw,16.5px);font-weight:300}
+.search{max-width:900px;margin:26px auto 0;background:rgba(13,35,58,.88);padding:14px;display:flex;gap:8px;flex-wrap:wrap;border-radius:4px;box-shadow:0 16px 34px rgba(0,0,0,.35)}
+.search select{flex:1;min-width:130px;padding:11px;border:none;border-radius:3px;font-size:14px;background:#fff;color:var(--ink);font-family:inherit}
+.search a{background:var(--gold);color:#221a08;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:11px 26px;border-radius:3px;font-size:13.5px;text-align:center}
+main{max-width:1140px;margin:0 auto;padding:10px 20px 100px}
+.sec{margin-top:56px}
+.sec h2{font-size:clamp(23px,3.2vw,29px);font-weight:500;color:var(--navy);text-align:center;margin-bottom:26px;position:relative;padding-bottom:13px}
+.sec h2:after{content:'';position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:44px;height:3px;background:var(--gold);border-radius:2px}
+.badges{display:flex;gap:8px;flex-wrap:wrap}
+.bdg{background:var(--gold);color:#221a08;font-size:11px;font-weight:700;padding:5px 10px;letter-spacing:.06em;text-transform:uppercase}
+.bdg.gold{background:var(--navy);color:#fff}
+.feat{background:var(--card);overflow:hidden;box-shadow:0 3px 14px rgba(15,44,73,.08);border:1px solid var(--line)}
+.feat .grid{display:grid;grid-template-columns:1.5fr 1fr}
+.feat .photo img{width:100%;height:100%;object-fit:cover;min-height:300px}
+.feat .info{padding:26px}
+.feat .price{font-size:29px;font-weight:800;color:var(--navy)}
+.feat .price small{display:block;font-size:11.5px;color:var(--mut);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.feat h3{font-size:18.5px;font-weight:600;margin:12px 0 4px;line-height:1.35}
+.feat .loc{color:var(--mut);font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0}
+.chip{background:#f1f3f5;border:1px solid var(--line);border-radius:3px;padding:6px 11px;font-size:12.5px;font-weight:600;color:var(--navy2)}
+.cta{display:block;background:var(--gold);color:#221a08;text-align:center;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:13px;border-radius:3px;font-size:13.5px;margin-top:10px}
+.cta.alt{background:var(--green);color:#fff}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.gal>img{width:100%;height:160px;object-fit:cover}
+.gal figure{margin:0;background:#fff;border:1px solid var(--line)}
+.gal figure img{width:100%;height:160px;object-fit:cover}
+.gal figcaption{font-size:12.5px;color:var(--mut);padding:8px 10px;font-weight:500}
+.desc{background:var(--card);border:1px solid var(--line);padding:26px;font-size:15.5px;line-height:1.7;box-shadow:0 3px 14px rgba(15,44,73,.05)}
+.desc h3{color:var(--navy);margin:16px 0 6px;font-size:16.5px}
+.desc h3:first-child{margin-top:0}
+.desc ul{margin-left:18px}
+.ficha{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.ficha div{background:var(--card);border:1px solid var(--line);padding:14px}
+.ficha b{display:block;color:var(--navy);font-size:17px;margin-top:2px}
+.ficha span{font-size:11.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.07em;font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.card{background:var(--card);overflow:hidden;border:1px solid var(--line);box-shadow:0 3px 14px rgba(15,44,73,.06);display:flex;flex-direction:column}
+.card .ph{position:relative}
+.card .ph img{width:100%;height:175px;object-fit:cover}
+.card .tag{position:absolute;top:10px;left:10px;background:var(--gold);color:#221a08;font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:4px 9px}
+.card .ci{padding:16px;display:flex;flex-direction:column;flex:1}
+.card .cp{font-size:20px;font-weight:800;color:var(--navy)}
+.card h3{font-size:15.5px;font-weight:600;margin:5px 0 3px;line-height:1.35}
+.card .cl{color:var(--mut);font-size:13px}
+.card .specs{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 14px}
+.card .specs span{background:#f1f3f5;border:1px solid var(--line);border-radius:3px;font-size:11.5px;font-weight:600;color:var(--navy2);padding:4px 8px}
+.card .cbtn{margin-top:auto;display:block;background:var(--gold);color:#221a08;text-align:center;font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:12.5px;padding:11px;border-radius:3px}
+.mapbox{background:var(--card);border:1px solid var(--line);padding:24px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.mapbox p{font-size:15.5px}
+.mapbox a{background:var(--navy);color:#fff;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:11px 18px;border-radius:3px;font-size:12.5px}
+.contact{background:var(--navy);color:#fff;padding:38px 24px;text-align:center}
+.contact h2{color:#fff}
+.contact h2:after{background:var(--gold)}
+.contact p{color:#c8d4df;margin:6px 0 18px}
+.contact .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.contact a{padding:13px 22px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:13px;border-radius:3px}
+.contact a.wa{background:var(--green);color:#fff}
+.contact a.tel{background:transparent;color:#fff;border:1px solid #ffffff55}
+footer{text-align:center;color:var(--mut);font-size:13px;padding:28px 16px 42px;line-height:1.7}
+.bottombar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:#fff;border-top:1px solid var(--line);padding:10px 14px;display:none;align-items:center;gap:12px;box-shadow:0 -4px 16px rgba(15,44,73,.08)}
+.bottombar .who{font-size:13px;line-height:1.3}
+.bottombar .who b{color:var(--navy)}
+.bottombar a{margin-left:auto;background:var(--green);color:#fff;font-weight:700;padding:11px 18px;border-radius:999px;font-size:13.5px;white-space:nowrap}
+@media(max-width:760px){.feat .grid{grid-template-columns:1fr}.bottombar{display:flex}.hbtn.tel{display:none}}
+
+/* Galeria sob clique (lightbox) */
+.gal{display:block}
+.teaser{position:relative;cursor:pointer;border:1px solid var(--line)}
+.teaser img{width:100%;height:360px;object-fit:cover}
+.teaser .ver{position:absolute;right:14px;bottom:14px;background:rgba(13,35,58,.92);color:#fff;font-weight:600;font-size:13.5px;padding:10px 16px;border-radius:3px;letter-spacing:.04em}
+#lightbox{position:fixed;inset:0;background:rgba(8,18,30,.95);z-index:200;align-items:center;justify-content:center}
+#lightbox figure{max-width:min(1020px,94vw);text-align:center;margin:0}
+#lbImg{max-width:100%;max-height:78vh;object-fit:contain;margin:0 auto}
+#lightbox figcaption{display:flex;justify-content:space-between;gap:14px;color:#dbe4ec;font-size:14px;padding-top:12px;text-align:left}
+#lbFechar{position:absolute;top:12px;right:18px;background:none;border:none;color:#fff;font-size:34px;cursor:pointer;line-height:1;z-index:2}
+#lbAnt,#lbSeg{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.14);border:none;color:#fff;font-size:28px;width:48px;height:48px;border-radius:50%;cursor:pointer;z-index:2}
+#lbAnt{left:14px}
+#lbSeg{right:14px}
+</style>
+<style>
+/* Acréscimo do modelo: nota de amostra, descrição nos cards e painel de demonstração */
+.secnote{text-align:center;color:var(--mut);font-size:14px;max-width:640px;margin:-14px auto 26px}
+.card .cd{font-size:13.5px;color:#454b50;margin-top:6px;line-height:1.5}
+.muestra-note{font-size:11px;color:var(--mut);margin-top:8px;letter-spacing:.03em}
+#panelBtn{position:fixed;right:16px;bottom:16px;z-index:90;background:var(--navy);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:10px 16px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer;box-shadow:0 8px 22px rgba(8,18,30,.35);font-family:inherit}
+#panelBtn svg{width:16px;height:16px;fill:#e7d6a8}
+@media(max-width:760px){#panelBtn{bottom:76px}}
+#panel{position:fixed;inset:0;background:rgba(8,18,30,.88);z-index:210;display:none;align-items:flex-start;justify-content:center;padding:22px 14px;overflow:auto}
+#panel .pbox{background:#fff;max-width:520px;width:100%;padding:26px;position:relative}
+#panel h3{color:var(--navy);font-size:20px;font-weight:700;margin-bottom:6px}
+#panel .pnote{font-size:13.5px;color:var(--mut);line-height:1.55;margin-bottom:8px}
+#panel label{display:block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);margin:14px 0 5px}
+#panel input[type=text],#panel textarea,#panel select{width:100%;padding:11px;border:1px solid var(--line);border-radius:3px;font-size:14.5px;font-family:inherit;background:#fff;color:var(--ink)}
+#panel textarea{min-height:74px;resize:vertical}
+#panel input[type=file]{font-size:13.5px;width:100%}
+#prevFoto{width:100%;height:170px;object-fit:cover;margin-top:10px;border:1px solid var(--line);display:none}
+#panel .save{background:var(--gold);color:#221a08;border:none;width:100%;padding:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:13.5px;border-radius:3px;cursor:pointer;margin-top:20px;font-family:inherit}
+#panelFechar{position:absolute;top:8px;right:12px;background:none;border:none;font-size:28px;color:var(--mut);cursor:pointer;line-height:1}
+#panel .plist{margin-top:20px;border-top:1px solid var(--line);padding-top:14px}
+#panel .plist h4{font-size:13px;color:var(--navy);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+#panel .pitem{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14px;padding:7px 0;border-bottom:1px solid #f0f0ee}
+#panel .pitem button{background:none;border:1px solid var(--line);color:#b03a2e;border-radius:3px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+#panelOk{display:none;background:#eafaf0;border:1px solid #bfe8cf;color:#146c36;font-size:13.5px;padding:10px 12px;margin-top:16px;border-radius:3px}
+
+</style>
+</head>
+<body>
+<div class="ribbon" id="ribbon">Vista previa de diseño para INMOPY · Inmuebles de muestra · No es el sitio oficial</div>
+<header>
+  <div class="hwrap">
+    <div id="logoBox"><div class="logo"> <span></span><small>Coronel Oviedo · Paraguay</small></div></div>
+    <div class="hcta">
+      
+      <a class="hbtn wa" href="https://wa.me/595976440333?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20una%20propiedad">WhatsApp</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <img src="https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.41-PM.jpeg" alt="Foto de portada">
+  <div class="over">
+    <div class="inner">
+      <h1>Encontrá tu <b>próxima vivienda</b></h1>
+      <p id="heroDesc">Propiedades en Coronel Oviedo y alrededores, con atención directa por WhatsApp.</p>
+      <form class="search" onsubmit="return false">
+        <select><option>Venta</option><option>Alquiler</option></select>
+        <select><option>Casas</option><option>Departamentos</option><option>Terrenos</option><option>Dúplex</option></select>
+        <select><option>Asunción</option><option>Lambaré</option><option>Luque</option><option>San Lorenzo</option></select>
+        <select><option>Precio: todos</option><option>Hasta Gs. 500.000.000</option><option>Gs. 500 a 1.000 millones</option><option>Más de Gs. 1.000 millones</option></select>
+        <a href="#propiedades">Buscar</a>
+      </form>
+    </div>
+  </div>
+</section>
+
+<main>
+  <section class="sec" id="destacada">
+    <h2>Propiedad destacada</h2>
+    <div class="feat">
+      <div class="grid">
+        <div class="photo"><img src="https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.41-PM.jpeg" alt="Fachada de la casa de muestra"></div>
+        <div class="info">
+          <div class="badges"><span class="bdg gold">Venta</span><span class="bdg">Casa</span><span class="bdg">Inmueble de muestra</span></div>
+          <div class="price" style="margin-top:12px"><small>Precio de venta</small>Gs. 1.250.000.000</div>
+          <h3>Casa de muestra en zona residencial: amplia, luminosa y lista para vivir</h3>
+          <p class="loc" id="featLoc">Coronel Oviedo · Paraguay</p>
+          <div class="chips">
+            <span class="chip">320 m² construidos</span>
+            <span class="chip">Terreno 360 m²</span>
+            <span class="chip">4 dormitorios</span>
+            <span class="chip">3 baños</span>
+            <span class="chip">Piscina</span>
+            <span class="chip">Garaje para 2</span>
+          </div>
+          <a class="cta" href="https://wa.me/595976440333?text=Hola%2C%20me%20interesa%20la%20casa%20de%20muestra%20que%20vi%20en%20la%20p%C3%A1gina">Consultar por WhatsApp</a>
+          <a class="cta alt" href="#galeria">Ver las fotos</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="galeria">
+    <h2>Fotos de la propiedad</h2>
+    <div class="gal">
+      <img src="https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.41-PM.jpeg" alt="Fachada">
+      <img src="https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.43-PM.jpeg" alt="Sala, cocina y comedor integrado">
+      <img src="https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.43-PM-1.jpeg" alt="Cocina en concepto abierto y climatizado">
+      <img src="https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.45-PM-1.jpeg" alt="Piscina escalonada en 3 niveles">
+      <img src="https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.44-PM-1.jpeg" alt="Garaje cubierto para 2 vehículos">
+      <img src="https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.44-PM-2.jpeg" alt="Garaje anexado a la sala">
+      <img src="https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.43-PM-2.jpeg" alt="Área de servicio">
+      <img src="https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.44-PM.jpeg" alt="Área de almacenamiento">
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Descripción</h2>
+    <div class="desc">
+      <p>Casa de muestra usada para ilustrar cómo se vería una propiedad publicada en tu página. Las fotos, los datos y este texto son ilustrativos: en tu sitio irían tus propiedades reales.</p>
+      <h3>Ambientes</h3>
+      <ul>
+        <li>Sala, cocina y comedor en concepto abierto</li>
+        <li>4 dormitorios, uno en suite</li>
+        <li>Piscina y terraza con quincho</li>
+        <li>Garaje cubierto para 2 vehículos</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Ficha técnica</h2>
+    <div class="ficha">
+      <div><span>Precio</span><b>Gs. 1.250.000.000</b></div>
+      <div><span>Operación</span><b>Venta</b></div>
+      <div><span>Tipo</span><b>Casa</b></div>
+      <div><span>Construidos</span><b>320 m²</b></div>
+      <div><span>Terreno</span><b>360 m²</b></div>
+      <div><span>Dormitorios</span><b>4</b></div>
+      <div><span>Ciudad</span><b id="fichaCiudad">Coronel Oviedo</b></div>
+      <div><span>Zona</span><b>Residencial</b></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Ubicación</h2>
+    <div class="mapbox">
+      <p><b id="mapLoc">Coronel Oviedo</b><br>Paraguay</p>
+      <a id="mapLink" href="https://www.google.com/maps/search/?api=1&query=Coronel%20Oviedo%2C%20Paraguay" target="_blank" rel="noopener">Abrir en Google Maps</a>
+    </div>
+  </section>
+
+  <section class="sec" id="propiedades">
+    <h2>Propiedades en venta</h2>
+    <p class="secnote">Inmuebles de muestra: así se verían tus propiedades publicadas en tu página.</p>
+    <div class="cards" id="cardsGrid"></div>
+  </section>
+
+  <section class="sec">
+    <div class="contact">
+      <h2>¿Te interesa esta propiedad?</h2>
+      <p>Escribinos por WhatsApp y coordinamos una visita. Nuestro equipo te guía en cada paso.</p>
+      <div class="row">
+        <a class="wa" href="https://wa.me/595976440333?text=Hola%2C%20me%20interesa%20la%20casa%20de%20muestra%20que%20vi%20en%20la%20p%C3%A1gina">Consultar por WhatsApp</a>
+        <a class="tel" href="#propiedades">Ver propiedades</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span id="footNome">INMOPY</span> · <span id="footCidade">Coronel Oviedo</span>, Paraguay<br>
+  Vista previa de diseño · Página de demostración con inmuebles de muestra
+</footer>
+
+<div class="bottombar">
+  <div class="who"><b id="bbNome">INMOPY</b><br>Respondemos por WhatsApp</div>
+  <a href="https://wa.me/595976440333?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20una%20propiedad">WhatsApp</a>
+</div>
+
+
+<div id="lightbox" style="display:none">
+  <button id="lbFechar" aria-label="Cerrar">&times;</button>
+  <button id="lbAnt" aria-label="Anterior">&#8249;</button>
+  <figure>
+    <img id="lbImg" alt="Foto de la propiedad">
+    <figcaption><span id="lbCap"></span><span id="lbNum"></span></figcaption>
+  </figure>
+  <button id="lbSeg" aria-label="Siguiente">&#8250;</button>
+</div>
+<script src="../s126/fotos-limpas-1.js"></script>
+<script src="../s126/fotos-limpas-2.js"></script>
+<script>
+(function () {
+  window.__SS = window.__SS || window['session' + 'Storage'];
+  var FALLBACK = {
+    'fachada.jpg': 'https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.41-PM.jpeg',
+    'sala.jpg': 'https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.43-PM.jpeg',
+    'cocina.jpg': 'https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.43-PM-1.jpeg',
+    'piscina.jpg': 'https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.45-PM-1.jpeg',
+    'garaje1.jpg': 'https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.44-PM-1.jpeg',
+    'garaje2.jpg': 'https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.44-PM-2.jpeg',
+    'servicio.jpg': 'https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.43-PM-2.jpeg',
+    'deposito.jpg': 'https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.44-PM.jpeg'
+  };
+  var CAPTIONS = {
+    'fachada.jpg': 'Fachada', 'sala.jpg': 'Sala, cocina y comedor integrado',
+    'cocina.jpg': 'Cocina en concepto abierto y climatizado', 'piscina.jpg': 'Piscina escalonada en 3 niveles',
+    'garaje1.jpg': 'Garaje cubierto para 2 veh\u00edculos', 'garaje2.jpg': 'Garaje anexado a la sala',
+    'servicio.jpg': '\u00c1rea de servicio', 'deposito.jpg': '\u00c1rea de almacenamiento'
+  };
+  var FOTOS = ['fachada.jpg', 'sala.jpg', 'cocina.jpg', 'piscina.jpg', 'garaje1.jpg', 'garaje2.jpg', 'servicio.jpg', 'deposito.jpg'];
+  function limpa(name) { return (window.FOTOS_LIMPAS || {})[name]; }
+  function fotoSrc(name) { return limpa(name) || FALLBACK[name] || name; }
+
+  /* Identidad de la inmobiliaria: viene de dados.json de esta carpeta */
+  var D = {
+    nome: 'INMOPY', cidade: 'Coronel Oviedo', whatsapp: '595976440333',
+    corPrincipal: '#274156', corDestaque: '#d9a441', logo: '', descricao: ''
+  };
+
+  /* Inmuebles de muestra: los mismos para todas las inmobiliarias */
+  var AMOSTRAS = [
+    { foto: 'sala.jpg', preco: 'Gs. 680.000.000', titulo: 'Departamento de muestra en el centro', zona: 'Centro', specs: ['2 dormitorios', '2 ba\u00f1os', '98 m\u00b2'], desc: 'Living comedor integrado con cocina en concepto abierto, balc\u00f3n y cochera.' },
+    { foto: 'cocina.jpg', preco: 'Gs. 890.000.000', titulo: 'Casa de muestra con cocina equipada', zona: 'Zona residencial', specs: ['3 dormitorios', '2 ba\u00f1os', '210 m\u00b2'], desc: 'Cocina equipada y amoblada, comedor diario y patio trasero.' },
+    { foto: 'piscina.jpg', preco: 'Gs. 1.480.000.000', titulo: 'Casa de muestra con piscina y quincho', zona: 'Zona residencial', specs: ['4 dormitorios', '4 ba\u00f1os', '410 m\u00b2'], desc: 'Piscina en niveles, terraza con quincho y vista despejada.' },
+    { foto: 'garaje1.jpg', preco: 'Gs. 760.000.000', titulo: 'D\u00faplex de muestra con garaje doble', zona: 'Zona residencial', specs: ['3 dormitorios', '3 ba\u00f1os', '180 m\u00b2'], desc: 'Garaje cubierto para 2 veh\u00edculos con port\u00f3n el\u00e9ctrico.' },
+    { foto: 'garaje2.jpg', preco: 'Gs. 720.000.000', titulo: 'Casa de muestra familiar', zona: 'Zona residencial', specs: ['3 dormitorios', '2 ba\u00f1os', '175 m\u00b2'], desc: 'Garaje integrado a la sala, ideal para familias.' },
+    { foto: 'servicio.jpg', preco: 'Gs. 540.000.000', titulo: 'Casa de muestra con \u00e1rea de servicio', zona: 'Zona residencial', specs: ['2 dormitorios', '2 ba\u00f1os', '140 m\u00b2'], desc: '\u00c1rea de servicio independiente y lavadero cubierto.' },
+    { foto: 'deposito.jpg', preco: 'Gs. 610.000.000', titulo: 'Casa de muestra con dep\u00f3sito amplio', zona: 'Zona residencial', specs: ['3 dormitorios', '2 ba\u00f1os', '200 m\u00b2'], desc: 'Dep\u00f3sito generoso y patio amplio.' }
+  ];
+
+  /* Troca as fotos da S126 pelas vers\u00f5es limpas embutidas */
+  var INV = {};
+  Object.keys(FALLBACK).forEach(function (k) { INV[FALLBACK[k]] = k; });
+  document.querySelectorAll('img').forEach(function (img) {
+    var n = INV[img.getAttribute('src')];
+    if (n && limpa(n)) img.src = limpa(n);
+  });
+
+  /* Galeria sob clique (lightbox), igual \u00e0 da S126 */
+  var lbAtual = 0;
+  function abrirLB(i) {
+    var fotos = window.__fotosLB || [];
+    if (!fotos.length) return;
+    lbAtual = ((i % fotos.length) + fotos.length) % fotos.length;
+    document.getElementById('lbImg').src = fotos[lbAtual].src;
+    document.getElementById('lbCap').textContent = fotos[lbAtual].cap;
+    document.getElementById('lbNum').textContent = (lbAtual + 1) + ' / ' + fotos.length;
+    document.getElementById('lightbox').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function fecharLB() {
+    document.getElementById('lightbox').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  document.getElementById('lbFechar').onclick = fecharLB;
+  document.getElementById('lbAnt').onclick = function (e) { e.stopPropagation(); abrirLB(lbAtual - 1); };
+  document.getElementById('lbSeg').onclick = function (e) { e.stopPropagation(); abrirLB(lbAtual + 1); };
+  document.getElementById('lightbox').onclick = function (e) { if (e.target === this) fecharLB(); };
+  window.__fotosLB = FOTOS.map(function (name) { return { src: fotoSrc(name), cap: CAPTIONS[name] || '' }; });
+  (function montarGaleria() {
+    var gal = document.querySelector('.gal');
+    if (!gal || !window.__fotosLB.length) return;
+    gal.innerHTML = '';
+    var t = document.createElement('div');
+    t.className = 'teaser';
+    var ti = document.createElement('img');
+    ti.src = window.__fotosLB[0].src;
+    ti.alt = window.__fotosLB[0].cap;
+    var ver = document.createElement('span');
+    ver.className = 'ver';
+    ver.textContent = 'Ver las ' + window.__fotosLB.length + ' fotos';
+    t.appendChild(ti);
+    t.appendChild(ver);
+    t.onclick = function () { abrirLB(0); };
+    gal.appendChild(t);
+    var featImg = document.querySelector('.feat .photo img');
+    if (featImg) { featImg.style.cursor = 'pointer'; featImg.onclick = function () { abrirLB(0); }; }
+    var verBtn = document.querySelector('.cta.alt');
+    if (verBtn) verBtn.onclick = function (e) { e.preventDefault(); abrirLB(0); };
+  })();
+
+  function waLink(texto) {
+    return 'https://wa.me/' + D.whatsapp + '?text=' + encodeURIComponent(texto);
+  }
+
+  function criarCard(p, doUsuario) {
+    var card = document.createElement('div');
+    card.className = 'card';
+    var ph = document.createElement('div');
+    ph.className = 'ph';
+    var img = document.createElement('img');
+    img.src = p.fotoData ? p.fotoData : fotoSrc(p.foto);
+    img.alt = p.titulo;
+    var tag = document.createElement('span');
+    tag.className = 'tag';
+    tag.textContent = doUsuario ? 'Venta' : 'Muestra';
+    ph.appendChild(img);
+    ph.appendChild(tag);
+    var ci = document.createElement('div');
+    ci.className = 'ci';
+    var cp = document.createElement('div');
+    cp.className = 'cp';
+    cp.textContent = p.preco;
+    var h3 = document.createElement('h3');
+    h3.textContent = p.titulo;
+    var cl = document.createElement('p');
+    cl.className = 'cl';
+    cl.textContent = p.loc;
+    ci.appendChild(cp);
+    ci.appendChild(h3);
+    ci.appendChild(cl);
+    if (p.desc) {
+      var cd = document.createElement('p');
+      cd.className = 'cd';
+      cd.textContent = p.desc;
+      ci.appendChild(cd);
+    }
+    if (p.specs && p.specs.length) {
+      var sp = document.createElement('div');
+      sp.className = 'specs';
+      p.specs.forEach(function (s) {
+        var el = document.createElement('span');
+        el.textContent = s;
+        sp.appendChild(el);
+      });
+      ci.appendChild(sp);
+    }
+    var btn = document.createElement('a');
+    btn.className = 'cbtn';
+    btn.href = waLink('Hola, me interesa ' + p.titulo + ' (' + p.preco + ') que vi en la p\u00e1gina');
+    btn.textContent = 'M\u00e1s informaci\u00f3n';
+    ci.appendChild(btn);
+    if (!doUsuario) {
+      var note = document.createElement('p');
+      note.className = 'muestra-note';
+      note.textContent = 'Inmueble de muestra';
+      ci.appendChild(note);
+    }
+    card.appendChild(ph);
+    card.appendChild(ci);
+    return card;
+  }
+
+  /* Inmuebles agregados por el visitante en el panel (quedan en la sesi\u00f3n del navegador) */
+  var CHAVE = 'muestra_inmopy_props';
+  function lerMeus() {
+    try {
+      var v = window.__SS.getItem(CHAVE);
+      var arr = v ? JSON.parse(v) : [];
+      return Array.isArray(arr) ? arr : [];
+    } catch (e) { return []; }
+  }
+  function salvarMeus(arr) {
+    try { window.__SS.setItem(CHAVE, JSON.stringify(arr)); } catch (e) {}
+  }
+  function renderCards() {
+    var grid = document.getElementById('cardsGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    AMOSTRAS.forEach(function (p) {
+      grid.appendChild(criarCard({ foto: p.foto, preco: p.preco, titulo: p.titulo, loc: p.zona + ', ' + D.cidade, specs: p.specs, desc: p.desc }, false));
+    });
+    lerMeus().forEach(function (p) {
+      grid.appendChild(criarCard(p, true));
+    });
+  }
+
+  function aplicar() {
+    document.title = D.nome + ' \u00b7 Propiedades en venta y alquiler';
+    var root = document.documentElement.style;
+    root.setProperty('--navy', D.corPrincipal);
+    root.setProperty('--gold', D.corDestaque);
+    root.setProperty('--navy2', 'color-mix(in srgb, ' + D.corPrincipal + ' 78%, white)');
+    var ribbon = document.getElementById('ribbon');
+    if (ribbon) ribbon.textContent = 'Vista previa de dise\u00f1o para ' + D.nome + ' \u00b7 Inmuebles de muestra \u00b7 No es el sitio oficial';
+    var logoBox = document.getElementById('logoBox');
+    if (logoBox) {
+      logoBox.innerHTML = '';
+      if (D.logo) {
+        var li = document.createElement('img');
+        li.className = 'logoimg';
+        li.src = D.logo;
+        li.alt = D.nome;
+        logoBox.appendChild(li);
+      } else {
+        var lg = document.createElement('div');
+        lg.className = 'logo';
+        var partes = D.nome.split(' ');
+        var ultima = partes.length > 1 ? partes.pop() : '';
+        lg.appendChild(document.createTextNode(partes.join(' ') + (ultima ? ' ' : '')));
+        if (ultima) {
+          var sp = document.createElement('span');
+          sp.textContent = ultima;
+          lg.appendChild(sp);
+        }
+        var sm = document.createElement('small');
+        sm.textContent = D.cidade + ' \u00b7 Paraguay';
+        lg.appendChild(sm);
+        logoBox.appendChild(lg);
+      }
+    }
+    var heroDesc = document.getElementById('heroDesc');
+    if (heroDesc) heroDesc.textContent = D.descricao || ('Propiedades en ' + D.cidade + ' y alrededores, con atenci\u00f3n directa por WhatsApp.');
+    var featLoc = document.getElementById('featLoc');
+    if (featLoc) featLoc.textContent = D.cidade + ' \u00b7 Paraguay';
+    var fichaCiudad = document.getElementById('fichaCiudad');
+    if (fichaCiudad) fichaCiudad.textContent = D.cidade;
+    var mapLoc = document.getElementById('mapLoc');
+    if (mapLoc) mapLoc.textContent = D.cidade;
+    var mapLink = document.getElementById('mapLink');
+    if (mapLink) mapLink.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(D.cidade + ', Paraguay');
+    var footNome = document.getElementById('footNome');
+    if (footNome) footNome.textContent = D.nome;
+    var footCidade = document.getElementById('footCidade');
+    if (footCidade) footCidade.textContent = D.cidade;
+    var bbNome = document.getElementById('bbNome');
+    if (bbNome) bbNome.textContent = D.nome;
+    document.querySelectorAll('a[href*="wa.me/"]').forEach(function (a) {
+      a.href = a.href.replace(/wa\.me\/\d+/, 'wa.me/' + D.whatsapp);
+    });
+    renderCards();
+    iniciarPanel();
+  }
+
+  /* Panel de demostraci\u00f3n: agregar inmuebles y verlos en la vitrina */
+  var panelIniciado = false;
+  function iniciarPanel() {
+    if (panelIniciado) return;
+    panelIniciado = true;
+    var panel = document.getElementById('panel');
+    var btn = document.getElementById('panelBtn');
+    if (!panel || !btn) return;
+    var sel = document.getElementById('fFotoMuestra');
+    FOTOS.forEach(function (name) {
+      var op = document.createElement('option');
+      op.value = name;
+      op.textContent = CAPTIONS[name] || name;
+      sel.appendChild(op);
+    });
+    function abrirPanel() { panel.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+    function fecharPanel() { panel.style.display = 'none'; document.body.style.overflow = ''; }
+    btn.onclick = abrirPanel;
+    document.getElementById('panelFechar').onclick = fecharPanel;
+    panel.onclick = function (e) { if (e.target === panel) fecharPanel(); };
+
+    var fotoDataAtual = '';
+    var inputFoto = document.getElementById('fFoto');
+    var prev = document.getElementById('prevFoto');
+    inputFoto.onchange = function () {
+      var file = inputFoto.files && inputFoto.files[0];
+      if (!file) { fotoDataAtual = ''; prev.style.display = 'none'; return; }
+      var reader = new FileReader();
+      reader.onload = function () {
+        var img = new Image();
+        img.onload = function () {
+          var max = 1000;
+          var esc = Math.min(1, max / Math.max(img.width, img.height));
+          var cv = document.createElement('canvas');
+          cv.width = Math.round(img.width * esc);
+          cv.height = Math.round(img.height * esc);
+          cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+          fotoDataAtual = cv.toDataURL('image/jpeg', 0.82);
+          prev.src = fotoDataAtual;
+          prev.style.display = 'block';
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    };
+
+    function renderLista() {
+      var meus = lerMeus();
+      var wrap = document.getElementById('panelList');
+      var items = document.getElementById('panelItems');
+      items.innerHTML = '';
+      wrap.style.display = meus.length ? 'block' : 'none';
+      meus.forEach(function (p, i) {
+        var row = document.createElement('div');
+        row.className = 'pitem';
+        var nome = document.createElement('span');
+        nome.textContent = p.titulo;
+        var del = document.createElement('button');
+        del.type = 'button';
+        del.textContent = 'Quitar';
+        del.onclick = function () {
+          var arr = lerMeus();
+          arr.splice(i, 1);
+          salvarMeus(arr);
+          renderCards();
+          renderLista();
+        };
+        row.appendChild(nome);
+        row.appendChild(del);
+        items.appendChild(row);
+      });
+    }
+    renderLista();
+
+    document.getElementById('panelForm').onsubmit = function (e) {
+      e.preventDefault();
+      var p = {
+        titulo: document.getElementById('fTitulo').value.trim(),
+        preco: document.getElementById('fPreco').value.trim(),
+        loc: document.getElementById('fLoc').value.trim(),
+        desc: document.getElementById('fDesc').value.trim(),
+        foto: sel.value,
+        fotoData: fotoDataAtual || ''
+      };
+      if (!p.titulo || !p.preco || !p.loc) return;
+      var arr = lerMeus();
+      arr.push(p);
+      salvarMeus(arr);
+      renderCards();
+      renderLista();
+      e.target.reset();
+      fotoDataAtual = '';
+      prev.style.display = 'none';
+      var ok = document.getElementById('panelOk');
+      ok.style.display = 'block';
+      setTimeout(function () {
+        fecharPanel();
+        ok.style.display = 'none';
+        var grid = document.getElementById('propiedades');
+        if (grid) grid.scrollIntoView({ behavior: 'smooth' });
+      }, 900);
+    };
+  }
+
+  fetch('dados.json').then(function (r) { return r.json(); }).then(function (d) {
+    if (d) { Object.keys(D).forEach(function (k) { if (d[k]) D[k] = d[k]; }); }
+    aplicar();
+  }).catch(function () { aplicar(); });
+})();
+
+</script>
+<button id="panelBtn" type="button" aria-label="Abrir panel de demostración"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.4 13a7.5 7.5 0 0 0 0-2l2-1.6-2-3.4-2.4 1a7.6 7.6 0 0 0-1.7-1L14.8 3H9.2L8.7 6a7.6 7.6 0 0 0-1.7 1l-2.4-1-2 3.4L4.6 11a7.5 7.5 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7.6 7.6 0 0 0 1.7 1l.5 3h5.6l.5-3a7.6 7.6 0 0 0 1.7-1l2.4 1 2-3.4-2-1.6zM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7z"/></svg>Panel</button>
+<div id="panel" role="dialog" aria-modal="true">
+  <div class="pbox">
+    <button id="panelFechar" type="button" aria-label="Cerrar">&times;</button>
+    <h3>Panel de demostración</h3>
+    <p class="pnote">Agregá tus inmuebles y mirá cómo quedan en tu página. Esto es una demostración: lo que agregues se ve al instante en esta página, en tu navegador.</p>
+    <form id="panelForm">
+      <label for="fTitulo">Nombre del inmueble</label>
+      <input type="text" id="fTitulo" placeholder="Ej.: Casa en el barrio San Pablo" required>
+      <label for="fFoto">Foto del inmueble</label>
+      <input type="file" id="fFoto" accept="image/*">
+      <img id="prevFoto" alt="Vista previa de la foto">
+      <label for="fFotoMuestra">O elegí una foto de muestra</label>
+      <select id="fFotoMuestra"></select>
+      <label for="fPreco">Precio</label>
+      <input type="text" id="fPreco" placeholder="Ej.: Gs. 850.000.000" required>
+      <label for="fLoc">Ubicación</label>
+      <input type="text" id="fLoc" placeholder="Ej.: San Pablo, Asunción" required>
+      <label for="fDesc">Descripción</label>
+      <textarea id="fDesc" placeholder="Contá lo mejor del inmueble: ambientes, dormitorios, patio, garaje..."></textarea>
+      <button class="save" type="submit">Agregar a mi página</button>
+      <div id="panelOk">¡Listo! Tu inmueble ya aparece en la vitrina de la página.</div>
+    </form>
+    <div class="plist" id="panelList" style="display:none">
+      <h4>Tus inmuebles agregados</h4>
+      <div id="panelItems"></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
