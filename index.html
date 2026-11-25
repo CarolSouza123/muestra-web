@@ -1,11 +1,266 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title></title>
-<style>html,body{margin:0;padding:0;background:#ffffff}</style>
+<title>Painel · Web Muestra</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: #0f1e33; color: #eef2f7; min-height: 100vh; }
+  .wrap { max-width: 560px; margin: 0 auto; padding: 22px 16px 48px; }
+  h1 { font-size: 20px; margin-bottom: 4px; }
+  .sub { color: #9db2c8; font-size: 13px; margin-bottom: 20px; }
+  .card { background: #16294a; border: 1px solid #24406e; border-radius: 14px; padding: 16px; margin-bottom: 16px; }
+  .card h2 { font-size: 15px; margin-bottom: 10px; color: #ffd97a; }
+  label { display: block; font-size: 12px; color: #9db2c8; margin: 10px 0 4px; }
+  input[type=text], input[type=password], textarea { width: 100%; padding: 11px; border-radius: 9px; border: 1px solid #33507f; background: #0d1a2e; color: #fff; font-size: 15px; }
+  textarea { min-height: 110px; resize: vertical; }
+  button { background: #1f9d55; color: #fff; border: 0; border-radius: 9px; padding: 11px 16px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  button.sec { background: #33507f; }
+  button.danger { background: #b3382e; }
+  button:disabled { opacity: .55; }
+  .row { display: flex; gap: 8px; align-items: center; }
+  .foto { display: flex; gap: 10px; align-items: center; background: #0d1a2e; border: 1px solid #24406e; border-radius: 10px; padding: 8px; margin-bottom: 8px; }
+  .foto img { width: 64px; height: 48px; object-fit: cover; border-radius: 6px; background: #000; }
+  .foto .nm { flex: 1; font-size: 13px; word-break: break-all; }
+  .foto button { padding: 8px 10px; font-size: 12px; }
+  #status { font-size: 13px; min-height: 18px; margin: 10px 0; color: #ffd97a; white-space: pre-wrap; }
+  #pinGate { max-width: 340px; margin: 12vh auto 0; text-align: center; }
+  #pinGate input { text-align: center; font-size: 22px; letter-spacing: 6px; }
+  .hidden { display: none; }
+  a { color: #7fc4ff; }
+  .hint { font-size: 12px; color: #9db2c8; line-height: 1.5; margin-top: 8px; }
+</style>
 </head>
 <body>
+
+<div id="pinGate" class="wrap">
+  <h1>Painel Web Muestra</h1>
+  <p class="sub">Digite o PIN para entrar</p>
+  <input type="password" id="pin" inputmode="numeric" autocomplete="off" placeholder="••••••">
+  <div style="height:12px"></div>
+  <button id="btnPin" style="width:100%">Entrar</button>
+  <p id="pinErr" style="color:#ff9a8a;font-size:13px;margin-top:10px"></p>
+</div>
+
+<div id="app" class="wrap hidden">
+  <h1>Painel Web Muestra</h1>
+  <p class="sub">Página: S126 · <a href="/s126" target="_blank">ver a página</a></p>
+  <div id="status"></div>
+
+  <div class="card" id="tokenCard">
+    <h2>Chave de acesso (uma vez só)</h2>
+    <p class="hint">Cole aqui a sua chave do GitHub. Ela fica salva só no seu celular e é ela que deixa o painel enviar as fotos como imagem de verdade.</p>
+    <label>Chave do GitHub</label>
+    <input type="password" id="token" autocomplete="off" placeholder="github_pat_...">
+    <div style="height:10px"></div>
+    <button id="btnToken">Salvar chave</button>
+    <span id="tokenState" class="hint"></span>
+  </div>
+
+  <div class="card">
+    <h2>Fotos da página</h2>
+    <div id="fotoList"></div>
+    <label>Adicionar foto nova</label>
+    <div class="row">
+      <input type="file" id="newFoto" accept="image/*" style="flex:1">
+      <button id="btnAdd" class="sec">Enviar</button>
+    </div>
+    <p class="hint">Trocar: toque em Trocar e escolha a foto nova. Ela entra como imagem de verdade, direto na página.</p>
+  </div>
+
+  <div class="card">
+    <h2>Textos da página</h2>
+    <label>Título do imóvel</label>
+    <input type="text" id="f_titulo">
+    <label>Preço</label>
+    <input type="text" id="f_preco">
+    <label>WhatsApp (só números, com código do país)</label>
+    <input type="text" id="f_whatsapp">
+    <label>Descrição (um parágrafo por linha em branco)</label>
+    <textarea id="f_descricao"></textarea>
+    <div style="height:12px"></div>
+    <button id="btnSaveTexts">Salvar textos</button>
+  </div>
+</div>
+
+<script>
+var OWNER = 'CarolSouza123', REPO = 'muestra-web', BRANCH = 'main', DIR = 's126';
+var PIN = '200221';
+var state = { dados: null, sha: null };
+var $ = function (id) { return document.getElementById(id); };
+
+function setStatus(msg) { $('status').textContent = msg; }
+function token() { return localStorage.getItem('muestra_token') || ''; }
+
+function gh(path, method, body) {
+  return fetch('https://api.github.com/repos/' + OWNER + '/' + REPO + '/contents/' + path, {
+    method: method || 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token(),
+      'Accept': 'application/vnd.github+json',
+      'Content-Type': 'application/json'
+    },
+    body: body ? JSON.stringify(body) : undefined
+  }).then(function (r) {
+    if (r.status === 404) return null;
+    if (!r.ok) return r.json().then(function (j) { throw new Error(j.message || ('Erro ' + r.status)); });
+    return r.status === 204 ? {} : r.json();
+  });
+}
+
+function b64encodeText(str) {
+  return btoa(unescape(encodeURIComponent(str)));
+}
+function b64decodeText(b64) {
+  return decodeURIComponent(escape(atob(b64.replace(/\n/g, ''))));
+}
+function fileToB64(file) {
+  return new Promise(function (resolve, reject) {
+    var rd = new FileReader();
+    rd.onload = function () { resolve(rd.result.split(',')[1]); };
+    rd.onerror = reject;
+    rd.readAsDataURL(file);
+  });
+}
+
+function loadDados() {
+  return gh(DIR + '/dados.json').then(function (j) {
+    if (!j) { state.dados = { fotos: [], titulo: '', preco: '', whatsapp: '', descricao: [] }; state.sha = null; return; }
+    state.sha = j.sha;
+    state.dados = JSON.parse(b64decodeText(j.content));
+  });
+}
+
+function saveDados(msg) {
+  var body = { message: msg, content: b64encodeText(JSON.stringify(state.dados, null, 2)), branch: BRANCH };
+  if (state.sha) body.sha = state.sha;
+  return gh(DIR + '/dados.json', 'PUT', body).then(function (j) { state.sha = j.content.sha; });
+}
+
+function renderFotos() {
+  var box = $('fotoList'); box.innerHTML = '';
+  (state.dados.fotos || []).forEach(function (name) {
+    var div = document.createElement('div'); div.className = 'foto';
+    var img = document.createElement('img');
+    img.src = 'https://raw.githubusercontent.com/' + OWNER + '/' + REPO + '/' + BRANCH + '/' + DIR + '/' + name + '?t=' + Date.now();
+    img.onerror = function () { img.style.opacity = '.25'; };
+    var nm = document.createElement('div'); nm.className = 'nm'; nm.textContent = name;
+    var bt = document.createElement('button'); bt.className = 'sec'; bt.textContent = 'Trocar';
+    var bd = document.createElement('button'); bd.className = 'danger'; bd.textContent = 'Remover';
+    var file = document.createElement('input'); file.type = 'file'; file.accept = 'image/*'; file.className = 'hidden';
+    bt.onclick = function () { file.click(); };
+    file.onchange = function () { if (file.files[0]) replaceFoto(name, file.files[0], bt, bd); };
+    bd.onclick = function () { if (confirm('Remover ' + name + ' da página?')) removeFoto(name, bd); };
+    div.appendChild(img); div.appendChild(nm); div.appendChild(bt); div.appendChild(bd); div.appendChild(file);
+    box.appendChild(div);
+  });
+}
+
+function putFoto(name, file, btns) {
+  setStatus('Enviando ' + name + '...');
+  return gh(DIR + '/' + name).then(function (cur) {
+    return fileToB64(file).then(function (b64) {
+      var body = { message: 'Foto ' + name + ' pelo painel', content: b64, branch: BRANCH };
+      if (cur && cur.sha) body.sha = cur.sha;
+      return gh(DIR + '/' + name, 'PUT', body);
+    });
+  });
+}
+
+function replaceFoto(name, file, bt, bd) {
+  bt.disabled = bd.disabled = true;
+  putFoto(name, file).then(function () {
+    setStatus('Foto ' + name + ' trocada. A página atualiza em cerca de 1 minuto.');
+    renderFotos();
+  }).catch(function (e) { setStatus('Erro: ' + e.message); }).then(function () { bt.disabled = bd.disabled = false; });
+}
+
+function removeFoto(name, bd) {
+  bd.disabled = true;
+  setStatus('Removendo ' + name + '...');
+  gh(DIR + '/' + name).then(function (cur) {
+    var p = cur ? gh(DIR + '/' + name, 'DELETE', { message: 'Remove foto ' + name + ' pelo painel', sha: cur.sha, branch: BRANCH }) : Promise.resolve();
+    return p.then(function () {
+      state.dados.fotos = state.dados.fotos.filter(function (f) { return f !== name; });
+      return saveDados('Painel: remove ' + name + ' da lista');
+    });
+  }).then(function () {
+    setStatus('Foto ' + name + ' removida.');
+    renderFotos();
+  }).catch(function (e) { setStatus('Erro: ' + e.message); bd.disabled = false; });
+}
+
+$('btnAdd').onclick = function () {
+  var f = $('newFoto').files[0];
+  if (!f) { setStatus('Escolha uma foto primeiro.'); return; }
+  var name = f.name.toLowerCase().replace(/[^a-z0-9._-]/g, '-');
+  if (state.dados.fotos.indexOf(name) >= 0) { setStatus('Já existe uma foto com esse nome. Troque a existente.'); return; }
+  $('btnAdd').disabled = true;
+  putFoto(name, f).then(function () {
+    state.dados.fotos.push(name);
+    return saveDados('Painel: adiciona foto ' + name);
+  }).then(function () {
+    setStatus('Foto ' + name + ' adicionada à página.');
+    $('newFoto').value = '';
+    renderFotos();
+  }).catch(function (e) { setStatus('Erro: ' + e.message); }).then(function () { $('btnAdd').disabled = false; });
+};
+
+$('btnSaveTexts').onclick = function () {
+  state.dados.titulo = $('f_titulo').value;
+  state.dados.preco = $('f_preco').value;
+  state.dados.whatsapp = $('f_whatsapp').value.replace(/\D/g, '');
+  state.dados.descricao = $('f_descricao').value.split(/\n\s*\n/).map(function (s) { return s.trim(); }).filter(Boolean);
+  $('btnSaveTexts').disabled = true;
+  saveDados('Painel: atualiza textos da S126').then(function () {
+    setStatus('Textos salvos. A página atualiza em cerca de 1 minuto.');
+  }).catch(function (e) { setStatus('Erro: ' + e.message); }).then(function () { $('btnSaveTexts').disabled = false; });
+};
+
+$('btnToken').onclick = function () {
+  var t = $('token').value.trim();
+  if (!t) { setStatus('Cole a chave primeiro.'); return; }
+  localStorage.setItem('muestra_token', t);
+  $('tokenState').textContent = 'Chave salva neste celular.';
+  initData();
+};
+
+function fillTexts() {
+  $('f_titulo').value = state.dados.titulo || '';
+  $('f_preco').value = state.dados.preco || '';
+  $('f_whatsapp').value = state.dados.whatsapp || '';
+  $('f_descricao').value = (state.dados.descricao || []).join('\n\n');
+}
+
+function initData() {
+  if (!token()) { setStatus('Falta salvar a chave do GitHub aqui embaixo para carregar as fotos.'); return; }
+  setStatus('Carregando...');
+  loadDados().then(function () {
+    setStatus('');
+    renderFotos(); fillTexts();
+  }).catch(function (e) { setStatus('Erro ao carregar: ' + e.message); });
+}
+
+function enter() {
+  if ($('pin').value === PIN) {
+    sessionStorage.setItem('muestra_ok', '1');
+    $('pinGate').classList.add('hidden');
+    $('app').classList.remove('hidden');
+    if (token()) $('tokenState').textContent = 'Chave já salva neste celular.';
+    initData();
+  } else {
+    $('pinErr').textContent = 'PIN incorreto.';
+  }
+}
+$('btnPin').onclick = enter;
+$('pin').addEventListener('keydown', function (e) { if (e.key === 'Enter') enter(); });
+if (sessionStorage.getItem('muestra_ok') === '1') {
+  $('pinGate').classList.add('hidden');
+  $('app').classList.remove('hidden');
+  if (token()) $('tokenState').textContent = 'Chave já salva neste celular.';
+  initData();
+}
+</script>
 </body>
 </html>

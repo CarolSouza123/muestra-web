@@ -1,0 +1,21 @@
+{
+  "fotos": [
+    "fachada.jpg",
+    "sala.jpg",
+    "cocina.jpg",
+    "piscina.jpg",
+    "garaje1.jpg",
+    "garaje2.jpg",
+    "servicio.jpg",
+    "deposito.jpg"
+  ],
+  "titulo": "Casa en Lambaré, Altos del Golf",
+  "preco": "Gs. 950.000.000",
+  "whatsapp": "595981815144",
+  "descricao": [
+    "Casa de 3 niveles en Altos del Golf, Lambaré, con terminaciones de calidad y todos los ambientes climatizados. Documentación en regla, lista para transferencia inmediata.",
+    "Nivel 1: sala, cocina y comedor en concepto abierto, cocina equipada, baño social, área de servicio, piscina y garaje cubierto para 2 vehículos con portón eléctrico.",
+    "Nivel 2: dormitorio principal en suite con jacuzzi, vestidor y aire acondicionado; dormitorio en suite con aire acondicionado; tercer dormitorio con aire acondicionado; baño y sala multiuso, ideal como cine, karaoke, consultorio u oficina con entrada independiente.",
+    "Nivel 3: terraza con quincho, parrilla rotativa de acero inoxidable y baño."
+  ]
+}

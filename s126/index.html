@@ -252,5 +252,83 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:26px 16px 40px}
   <div class="who"><b>S126 Inmobiliaria</b><br>Respondemos por WhatsApp</div>
   <a href="https://wa.me/595981815144?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20una%20propiedad">WhatsApp</a>
 </div>
+
+<script>
+(function () {
+  var FALLBACK = {
+    'fachada.jpg': 'https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.41-PM.jpeg',
+    'sala.jpg': 'https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.43-PM.jpeg',
+    'cocina.jpg': 'https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.43-PM-1.jpeg',
+    'piscina.jpg': 'https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.45-PM-1.jpeg',
+    'garaje1.jpg': 'https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.44-PM-1.jpeg',
+    'garaje2.jpg': 'https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.44-PM-2.jpeg',
+    'servicio.jpg': 'https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.43-PM-2.jpeg',
+    'deposito.jpg': 'https://s126.com.py/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-16-at-6.54.44-PM.jpeg'
+  };
+  var CAPTIONS = {
+    'fachada.jpg': 'Fachada', 'sala.jpg': 'Sala, cocina y comedor integrado',
+    'cocina.jpg': 'Cocina en concepto abierto y climatizado', 'piscina.jpg': 'Piscina escalonada en 3 niveles',
+    'garaje1.jpg': 'Garaje cubierto para 2 veh\u00edculos', 'garaje2.jpg': 'Garaje anexado a la sala',
+    'servicio.jpg': '\u00c1rea de servicio', 'deposito.jpg': '\u00c1rea de almacenamiento'
+  };
+  function arm(img, name) {
+    img.onerror = function () { if (FALLBACK[name] && img.src.indexOf('s126.com.py') < 0) img.src = FALLBACK[name]; };
+    img.src = name;
+  }
+  fetch('dados.json').then(function (r) { return r.json(); }).then(function (d) {
+    if (!d || !d.fotos || !d.fotos.length) return;
+    var hero = document.querySelector('.hero img');
+    if (hero) arm(hero, d.fotos[0]);
+    var feat = document.querySelector('.feat .ph img');
+    if (feat) arm(feat, d.fotos[0]);
+    var fix = document.querySelector('.fixbar img');
+    if (fix) arm(fix, d.fotos.indexOf('piscina.jpg') >= 0 ? 'piscina.jpg' : d.fotos[0]);
+    var gal = document.querySelector('.gal');
+    if (gal) {
+      gal.innerHTML = '';
+      d.fotos.forEach(function (name) {
+        var fig = document.createElement('figure');
+        var img = document.createElement('img');
+        img.alt = CAPTIONS[name] || name;
+        img.loading = 'lazy';
+        arm(img, name);
+        fig.appendChild(img);
+        if (CAPTIONS[name]) {
+          var cap = document.createElement('figcaption');
+          cap.textContent = CAPTIONS[name];
+          fig.appendChild(cap);
+        }
+        gal.appendChild(fig);
+      });
+    }
+    if (d.titulo) {
+      var h = document.querySelector('.feat h2');
+      if (h) h.textContent = d.titulo;
+    }
+    if (d.preco) {
+      var p = document.querySelector('.price');
+      if (p) p.textContent = d.preco;
+    }
+    if (d.descricao && d.descricao.length) {
+      var desc = document.querySelector('.desc');
+      if (desc) {
+        var lede = desc.querySelector('.lede');
+        desc.innerHTML = '';
+        if (lede) desc.appendChild(lede);
+        d.descricao.forEach(function (t) {
+          var par = document.createElement('p');
+          par.textContent = t;
+          desc.appendChild(par);
+        });
+      }
+    }
+    if (d.whatsapp) {
+      document.querySelectorAll('a[href*="wa.me/"]').forEach(function (a) {
+        a.href = a.href.replace(/wa\.me\/\d+/, 'wa.me/' + d.whatsapp);
+      });
+    }
+  }).catch(function () {});
+})();
+</script>
 </body>
 </html>
