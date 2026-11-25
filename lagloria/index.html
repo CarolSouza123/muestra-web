@@ -8,7 +8,7 @@
 <meta name="description" content="Vista previa de página web para inmobiliaria: propiedades con fotos, precios y contacto directo por WhatsApp.">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--navy:#0f2c49;--navy2:#17456e;--gold:#c9a45c;--green:#1faa55;--ink:#2b2f33;--mut:#7a8288;--bg:#f4f4f2;--line:#e6e6e2;--card:#fff}
+:root{--navy:#5b2333;--navy2:#17456e;--gold:#d9a441;--green:#1faa55;--ink:#2b2f33;--mut:#7a8288;--bg:#f4f4f2;--line:#e6e6e2;--card:#fff}
 body{font-family:'Inter',-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55}
 img{display:block;max-width:100%}
 a{text-decoration:none;color:inherit}
@@ -136,10 +136,10 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:28px 16px 42px;
 </style>
 </head>
 <body>
-<div class="ribbon" id="ribbon">Vista previa de diseño · Inmuebles de muestra · No es el sitio oficial</div>
+<div class="ribbon" id="ribbon">Vista previa de diseño para Inmobiliaria La Gloria · Inmuebles de muestra · No es el sitio oficial</div>
 <header>
   <div class="hwrap">
-    <div id="logoBox"><div class="logo">Inmobiliaria <span>Ejemplo</span><small>Asunción · Paraguay</small></div></div>
+    <div id="logoBox"><div class="logo">Inmobiliaria La <span>Gloria</span><small>Encarnación · Paraguay</small></div></div>
     <div class="hcta">
       
       <a class="hbtn wa" href="https://wa.me/595985118787?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20una%20propiedad">WhatsApp</a>
@@ -152,7 +152,7 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:28px 16px 42px;
   <div class="over">
     <div class="inner">
       <h1>Encontrá tu <b>próxima vivienda</b></h1>
-      <p id="heroDesc">Propiedades en Asunción y Gran Asunción, con atención directa por WhatsApp.</p>
+      <p id="heroDesc">Propiedades en Encarnación y alrededores, con atención directa por WhatsApp.</p>
       <form class="search" onsubmit="return false">
         <select><option>Venta</option><option>Alquiler</option></select>
         <select><option>Casas</option><option>Departamentos</option><option>Terrenos</option><option>Dúplex</option></select>
@@ -174,7 +174,7 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:28px 16px 42px;
           <div class="badges"><span class="bdg gold">Venta</span><span class="bdg">Casa</span><span class="bdg">Inmueble de muestra</span></div>
           <div class="price" style="margin-top:12px"><small>Precio de venta</small>Gs. 1.250.000.000</div>
           <h3>Casa de muestra en zona residencial: amplia, luminosa y lista para vivir</h3>
-          <p class="loc" id="featLoc">Asunción · Paraguay</p>
+          <p class="loc" id="featLoc">Encarnación · Paraguay</p>
           <div class="chips">
             <span class="chip">320 m² construidos</span>
             <span class="chip">Terreno 360 m²</span>
@@ -227,7 +227,7 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:28px 16px 42px;
       <div><span>Construidos</span><b>320 m²</b></div>
       <div><span>Terreno</span><b>360 m²</b></div>
       <div><span>Dormitorios</span><b>4</b></div>
-      <div><span>Ciudad</span><b id="fichaCiudad">Asunción</b></div>
+      <div><span>Ciudad</span><b id="fichaCiudad">Encarnación</b></div>
       <div><span>Zona</span><b>Residencial</b></div>
     </div>
   </section>
@@ -235,8 +235,8 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:28px 16px 42px;
   <section class="sec">
     <h2>Ubicación</h2>
     <div class="mapbox">
-      <p><b id="mapLoc">Asunción</b><br>Paraguay</p>
-      <a id="mapLink" href="https://www.google.com/maps/search/?api=1&query=Asunci%C3%B3n,+Paraguay" target="_blank" rel="noopener">Abrir en Google Maps</a>
+      <p><b id="mapLoc">Encarnación</b><br>Paraguay</p>
+      <a id="mapLink" href="https://www.google.com/maps/search/?api=1&query=Encarnaci%C3%B3n%2C%20Paraguay" target="_blank" rel="noopener">Abrir en Google Maps</a>
     </div>
   </section>
 
@@ -259,7 +259,7 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:28px 16px 42px;
 </main>
 
 <footer>
-  <span id="footNome">Inmobiliaria La Gloria</span> · <span id="footCidade">Asunción</span>, Paraguay<br>
+  <span id="footNome">Inmobiliaria La Gloria</span> · <span id="footCidade">Encarnación</span>, Paraguay<br>
   Vista previa de diseño · Página de demostración con inmuebles de muestra
 </footer>
 
@@ -305,8 +305,8 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:28px 16px 42px;
 
   /* Identidad de la inmobiliaria: viene de dados.json de esta carpeta */
   var D = {
-    nome: 'Inmobiliaria La Gloria', cidade: 'Asunci\u00f3n', whatsapp: '595985118787',
-    corPrincipal: '#0f2c49', corDestaque: '#c9a45c', logo: '', descricao: ''
+    nome: 'Inmobiliaria La Gloria', cidade: 'Encarnación', whatsapp: '595985118787',
+    corPrincipal: '#5b2333', corDestaque: '#d9a441', logo: '', descricao: ''
   };
 
   /* Inmuebles de muestra: los mismos para todas las inmobiliarias */
