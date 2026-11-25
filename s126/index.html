@@ -253,6 +253,8 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:26px 16px 40px}
   <a href="https://wa.me/595981815144?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20una%20propiedad">WhatsApp</a>
 </div>
 
+<script src="fotos-limpas-1.js"></script>
+<script src="fotos-limpas-2.js"></script>
 <script>
 (function () {
   var FALLBACK = {
@@ -271,15 +273,24 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:26px 16px 40px}
     'garaje1.jpg': 'Garaje cubierto para 2 veh\u00edculos', 'garaje2.jpg': 'Garaje anexado a la sala',
     'servicio.jpg': '\u00c1rea de servicio', 'deposito.jpg': '\u00c1rea de almacenamiento'
   };
+  function limpa(name) { return (window.FOTOS_LIMPAS || {})[name]; }
   function arm(img, name) {
+    var l = limpa(name);
+    if (l) { img.onerror = null; img.src = l; return; }
     img.onerror = function () { if (FALLBACK[name] && img.src.indexOf('s126.com.py') < 0) img.src = FALLBACK[name]; };
     img.src = name;
   }
+  var INV = {};
+  Object.keys(FALLBACK).forEach(function (k) { INV[FALLBACK[k]] = k; });
+  document.querySelectorAll('img').forEach(function (img) {
+    var n = INV[img.getAttribute('src')];
+    if (n && limpa(n)) img.src = limpa(n);
+  });
   fetch('dados.json').then(function (r) { return r.json(); }).then(function (d) {
     if (!d || !d.fotos || !d.fotos.length) return;
     var hero = document.querySelector('.hero img');
     if (hero) arm(hero, d.fotos[0]);
-    var feat = document.querySelector('.feat .ph img');
+    var feat = document.querySelector('.feat .photo img');
     if (feat) arm(feat, d.fotos[0]);
     var fix = document.querySelector('.fixbar img');
     if (fix) arm(fix, d.fotos.indexOf('piscina.jpg') >= 0 ? 'piscina.jpg' : d.fotos[0]);
